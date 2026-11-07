@@ -1,0 +1,54 @@
+/* ~/.config/swaync/style.css */
+
+.notification-row {
+    margin: 10px;
+}
+
+.notification {
+    background: rgba(15,15,20,0.92);
+
+    border: 1px solid rgba(0,180,255,0.4);
+    border-radius: 20px;
+
+    min-width: 420px;
+
+    padding: 0;
+
+    box-shadow:
+        0 0 15px rgba(0,180,255,0.15),
+        0 0 30px rgba(0,180,255,0.08);
+}
+
+.notification-content {
+    padding: 18px 20px;
+}
+
+.image {
+    margin-right: 16px;
+}
+
+.summary {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 15px;
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+    color: #66d9ff;
+}
+
+.body {
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: #d8dee9;
+}
+
+.notification-default-action {
+    padding: 18px;
+}
+
+.notification-default-action:hover {
+    background: rgba(0,180,255,0.08);
+    border-radius: 20px;
+}

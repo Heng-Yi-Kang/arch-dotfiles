@@ -1,0 +1,47 @@
+/* SwayNC theme generated from the shared semantic palette. */
+
+.notification-row {
+    margin: 10px;
+}
+
+.notification {
+    background: {{ colors.background | rgba(0.92) }};
+    border: 1px solid {{ colors.border | rgba(0.4) }};
+    border-radius: 20px;
+    min-width: 420px;
+    padding: 0;
+    box-shadow:
+        0 0 15px {{ colors.accent | rgba(0.15) }},
+        0 0 30px {{ colors.accent | rgba(0.08) }};
+}
+
+.notification-content {
+    padding: 18px 20px;
+}
+
+.image {
+    margin-right: 16px;
+}
+
+.summary {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: {{ colors.info }};
+}
+
+.body {
+    font-size: 13px;
+    line-height: 1.6;
+    color: {{ colors.foreground }};
+}
+
+.notification-default-action {
+    padding: 18px;
+}
+
+.notification-default-action:hover {
+    background: {{ colors.accent | rgba(0.08) }};
+    border-radius: 20px;
+}

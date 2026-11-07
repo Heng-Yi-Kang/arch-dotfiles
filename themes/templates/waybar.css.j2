@@ -1,0 +1,121 @@
+/* Premium Waybar theme */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Noto Color Emoji", arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 0;
+}
+
+/* Container bar - Floating Island Style */
+window#waybar {
+    background-color: {{ colors.background | rgba(0.75) }};
+    color: {{ colors.foreground }};
+    transition: background-color 0.5s;
+    border-radius: 16px;
+    margin: 8px 12px 0px 12px;
+}
+
+/* Individual Module Blocks - "Pill" design styling */
+#workspaces,
+#submap,
+#clock,
+#cpu,
+#memory,
+#network,
+#battery,
+#backlight,
+#pulseaudio,
+#tray {
+    background-color: {{ colors.surface | rgba(0.60) }};
+    padding: 0px 16px;
+    margin: 6px 4px;
+    border-radius: 10px;
+    border: 1px solid {{ colors.border | rgba(0.55) }};
+}
+
+/* Left side: Premium Minimal Workspaces */
+#workspaces button {
+    padding: 0px 8px;
+    color: {{ colors.muted | rgba(0.8) }};
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+#workspaces button.active {
+    color: {{ colors.accent }};
+    font-size: 20px;
+    background-color: {{ colors.accent | rgba(0.16) }};
+    border-radius: 50%;
+}
+
+#workspaces button.urgent {
+    color: {{ colors.error }};
+}
+
+#workspaces button:hover {
+    background-color: {{ colors.surface_alt | rgba(0.75) }};
+    color: {{ colors.foreground }};
+}
+
+/* Center Side: Smooth High-Contrast Clock */
+#clock {
+    color: {{ colors.foreground }};
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Right Side Core Monitoring Modules */
+#cpu {
+    color: {{ colors.success }};
+}
+
+#memory {
+    color: {{ colors.warning }};
+}
+
+#backlight {
+    color: {{ colors.accent_alt }};
+}
+
+#pulseaudio {
+    color: {{ colors.info }};
+}
+
+#pulseaudio.muted {
+    color: {{ colors.muted }};
+}
+
+/* Tray / Menu Background */
+#tray {
+    background-color: {{ colors.surface_alt | rgba(0.85) }};
+}
+
+/* Network connection state */
+#network {
+    color: {{ colors.info }};
+}
+
+#network.disconnected {
+    color: {{ colors.error }};
+}
+
+/* Battery state */
+#battery {
+    color: {{ colors.info }};
+}
+
+#battery.charging,
+#battery.plugged {
+    color: {{ colors.success }};
+}
+
+#battery.warning:not(.charging) {
+    color: {{ colors.warning }};
+}
+
+#battery.critical:not(.charging) {
+    color: {{ colors.error }};
+}

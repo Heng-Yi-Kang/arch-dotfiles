@@ -12,10 +12,10 @@
 ## Theme management
 
 - `themes/palettes/` contains source color schemes.
-- `themes/wallust/templates/` contains application-specific templates.
-- `themes/wallust/wallust.toml` defines Wallust generation.
-- `generated/` contains generated application color files.
-- Generated files must not be manually edited.
+- `themes/templates/` contains the canonical Jinja2 source templates for application styling.
+- `themes/generator/` contains scripts that render templates using the palettes.
+- `generated/` contains rendered application files; never edit these outputs manually.
+- Application stylesheets in `apps/` may import their corresponding generated files.
 
 ## Color conventions
 
@@ -24,9 +24,9 @@ Use semantic color names consistently:
 - background
 - foreground
 - surface
-- surface-alt
+- surface_alt
 - accent
-- accent-alt
+- accent_alt
 - border
 - muted
 - success
@@ -38,9 +38,9 @@ to the shared semantic color definitions.
 
 ## Application configurations
 
-- `apps/` contains source configurations.
-- Keep application behavior separate from appearance.
-- Do not duplicate shared colors.
+- `apps/` contains application behavior/configuration and app-facing imports of generated styling.
+- Keep application behavior separate from appearance; author shared styling in `themes/templates/`.
+- Do not duplicate shared colors or maintain a second editable copy of a generated stylesheet.
 - Do not modify unrelated application settings when
   working on a specific application.
 
@@ -48,10 +48,10 @@ to the shared semantic color definitions.
 
 When modifying a theme:
 
-1. Update the source palette or theme definition.
-2. Update relevant Wallust templates.
-3. Regenerate affected application color files.
-4. Verify all applications use the new colors.
+1. Update the source palette or theme definition as needed.
+2. Update the canonical application template(s) in `themes/templates/`.
+3. Regenerate affected application files with the corresponding script in `themes/generator/`.
+4. Ensure app-facing imports in `apps/` resolve to the generated outputs and verify the applications use the new colors.
 
 When modifying an application:
 
@@ -63,6 +63,6 @@ When modifying an application:
 ## Generated files
 
 - Never edit generated files directly.
-- Regenerate them through the theme scripts.
+- Regenerate them through the theme scripts before installing or using app-facing imports.
 - Keep generated files out of Git unless explicitly needed
   for reproducible testing.

@@ -25,7 +25,7 @@ vimcmd_symbol = "[❮]({{ colors.success }})"
 
 [git_branch]
 format = "[$branch]($style)"
-style = "{{ colors.muted }}"
+style = "{{ colors.foreground }}"
 
 [git_status]
 format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)]({{ colors.error }}) ($ahead_behind$stashed)]($style)"

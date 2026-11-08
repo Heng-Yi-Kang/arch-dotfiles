@@ -1,0 +1,20 @@
+# Everforest light palette using the default (medium-contrast) background variant.
+# Colors sourced from https://github.com/sainnhe/everforest/blob/master/palette.md
+
+[colors]
+background = "#FDF6E3"
+foreground = "#5C6A72"
+
+surface = "#F4F0D9"
+surface_alt = "#E6E2CC"
+
+accent = "#8DA101"
+accent_alt = "#3A94C5"
+
+border = "#939F91"
+muted = "#A6B0A0"
+
+success = "#8DA101"
+warning = "#DFA000"
+error = "#F85552"
+info = "#3A94C5"

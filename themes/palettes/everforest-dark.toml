@@ -1,0 +1,20 @@
+# Everforest dark palette using the default (medium-contrast) background variant.
+# Colors sourced from https://github.com/sainnhe/everforest/blob/master/palette.md
+
+[colors]
+background = "#2D353B"
+foreground = "#D3C6AA"
+
+surface = "#343F44"
+surface_alt = "#3D484D"
+
+accent = "#A7C080"
+accent_alt = "#7FBBB3"
+
+border = "#475258"
+muted = "#7A8478"
+
+success = "#A7C080"
+warning = "#DBBC7F"
+error = "#E67E80"
+info = "#7FBBB3"

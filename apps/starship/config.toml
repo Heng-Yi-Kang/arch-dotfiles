@@ -1,0 +1,71 @@
+# Starship prompt layout, modules, symbols, and behavior.
+# Use semantic color tokens; generate the runtime config with themes/generator/generate_starship.py.
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$python\
+$character"""
+
+[directory]
+style = "bold {{ colors.accent }}"
+
+[character]
+success_symbol = "[❯]({{ colors.accent_alt }})"
+error_symbol = "[❯]({{ colors.error }})"
+vimcmd_symbol = "[❮]({{ colors.success }})"
+
+[git_branch]
+format = "[$branch]($style)"
+style = "{{ colors.muted }}"
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)]({{ colors.error }}) ($ahead_behind$stashed)]($style)"
+style = "{{ colors.accent }}"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "{{ colors.muted }}"
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "{{ colors.warning }}"
+
+[jj_bookmark]
+format = "[$bookmark(@$remote)$diverged( \\(+$overflow_count others\\))]($style)"
+style = "{{ colors.muted }}"
+
+[jj_status]
+format = "[[(*$all)]({{ colors.error }})]($style)"
+style = "{{ colors.accent }}"
+conflicted = "​"
+description_empty = ""
+description_present = ""
+hidden = "​"
+immutable = "​"
+added = "​"
+copied = ""
+deleted = "​"
+modified = "​"
+renamed = "​"
+
+[python]
+format = "[$virtualenv]($style) "
+style = "{{ colors.muted }}"
+detect_extensions = []
+detect_files = []

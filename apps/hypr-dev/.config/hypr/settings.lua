@@ -1,6 +1,6 @@
 -- Shared values used by configuration modules.
 return {
-	mainMod = "Mod1",
+	mainMod = "SUPER",
 	terminal = "kitty",
 	fileManager = "thunar",
 	menu = "rofi -show drun",

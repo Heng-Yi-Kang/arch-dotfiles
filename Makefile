@@ -1,6 +1,6 @@
 PACKAGES = hypr waybar swaync kitty bash
 
-.PHONY: install uninstall restow preview theme reload validate
+.PHONY: install uninstall restow preview theme reload validate hypr-colors
 
 install:
 	stow -d apps -t ~ $(PACKAGES)
@@ -25,3 +25,11 @@ reload:
 
 validate:
 	./scripts/validate-configs
+
+# Generate the Hyprland dev config's palette-backed Lua color module.
+hypr-colors:
+	@if [ -x .venv/bin/python ]; then \
+		.venv/bin/python themes/generator/generate_hypr.py; \
+	else \
+		python3 themes/generator/generate_hypr.py; \
+	fi

@@ -1,0 +1,6 @@
+-- Generated from themes/palettes/tokyo-night.toml; do not edit by hand.
+-- Hyprland-specific appearance code maps these shared semantic tokens to
+-- Hyprland's native color syntax and applies per-use opacity.
+return {
+{% for name in required_colors %}	{{ name }} = "{{ colors[name] }}",
+{% endfor %}}

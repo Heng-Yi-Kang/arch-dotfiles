@@ -1,6 +1,9 @@
 PACKAGES = hypr waybar swaync kitty bash
 
-.PHONY: install uninstall restow preview theme reload validate hypr-colors
+HYPR_DEV = apps/hypr-dev/.config/hypr
+HYPR_LIVE = apps/hypr/.config/hypr
+
+.PHONY: install uninstall restow preview theme reload validate hypr-colors hypr-validate hypr-preview hypr-deploy hypr-rollback
 
 install:
 	stow -d apps -t ~ $(PACKAGES)
@@ -33,3 +36,18 @@ hypr-colors:
 	else \
 		python3 themes/generator/generate_hypr.py; \
 	fi
+
+# Static checks only; this does not start or reload Hyprland.
+hypr-validate:
+	./scripts/hypr-validate
+
+# Show the changes that deployment would make without writing to the live config.
+hypr-preview: hypr-validate
+	rsync -ain --delete $(HYPR_DEV)/ $(HYPR_LIVE)/
+
+# Scripts require typing DEPLOY or ROLLBACK before changing the live config.
+hypr-deploy:
+	./scripts/hypr-deploy
+
+hypr-rollback:
+	./scripts/hypr-rollback

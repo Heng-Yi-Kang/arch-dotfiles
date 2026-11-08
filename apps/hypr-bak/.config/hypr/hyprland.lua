@@ -4,10 +4,10 @@
 local settings = require("settings")
 
 require("modules.monitor")()
--- require("modules.environment")()
+require("modules.environment")()
 require("modules.appearance")()
 require("modules.keybindings")(settings)
 require("modules.resize")()
--- require("modules.media")()
+require("modules.media")()
 require("modules.autostart")()
--- require("modules.window_rules")()
+require("modules.window_rules")()

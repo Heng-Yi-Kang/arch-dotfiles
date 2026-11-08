@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+DEV="$ROOT/apps/hypr-dev/.config/hypr"
+GENERATED_COLORS="$ROOT/generated/hypr/colors.lua"
+
+if [[ ! -d "$DEV" ]]; then
+  printf 'Hyprland dev config not found: %s\n' "$DEV" >&2
+  exit 1
+fi
+
+if [[ -x "$ROOT/.venv/bin/python" ]]; then
+  "$ROOT/.venv/bin/python" "$ROOT/themes/generator/generate_hypr.py"
+else
+  python3 "$ROOT/themes/generator/generate_hypr.py"
+fi
+
+command -v luac >/dev/null || {
+  echo 'luac is required to validate the Hyprland Lua config.' >&2
+  exit 1
+}
+
+find "$DEV" -type f -name '*.lua' -exec luac -p {} +
+bash -n "$DEV"/scripts/*.sh
+test -s "$GENERATED_COLORS"
+printf 'Hyprland dev config passed Lua and shell syntax checks.\n'

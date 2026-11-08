@@ -67,6 +67,13 @@ config.
 - Consider defining a small, simple recovery set early in the Lua startup sequence, before modules that are more likely to fail. These are ordinary configured keybinds, not Hyprland's emergency binds. Their usefulness depends on Hyprland successfully loading that part of the config, so retain an independent recovery route as well.
 - Keep recovery actions conservative and easy to remember. In particular, `SUPER + M` exits Hyprland in the built-in emergency set; avoid assigning it a conflicting expectation.
 
+## Deployment
+
+Deployment preparation, module-load review, required user confirmation, validation,
+backup, deployment, and rollback instructions are maintained in
+[`DEPLOY.md`](DEPLOY.md). Follow that checklist before syncing this development
+configuration into the live `apps/hypr/` tree.
+
 ## Test this config without replacing the live session
 
 The safest way to test configuration behavior is to start a **nested Hyprland session** in a window inside your current Hyprland desktop. Hyprland's [Contributing and Debugging guide](https://wiki.hypr.land/Contributing-and-Debugging/) recommends this approach for development: the nested compositor can be tested without logging out of or replacing the live session.
@@ -92,7 +99,7 @@ Recommended workflow:
    ```
 
    The nested compositor should open in a window. Test there, then exit that nested session normally. The original compositor remains active.
-4. Use a modifier for test bindings that differs from the live session's modifier. This development config currently sets `mainMod` to `SUPER` (the Windows/Meta key); check that it does not conflict with your live bindings.
+4. The development config currently sets `mainMod` to `Mod1` (Alt). If that conflicts with your live bindings during nested testing, change the modifier in the temporary copy.
 
 You can point `--config` directly at `apps/hypr-dev/.config/hypr/hyprland.lua`, but only after disabling or isolating its autostart behavior. A temporary copy is safer because test-specific edits then cannot accidentally alter the tracked dev config or live config.
 

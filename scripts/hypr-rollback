@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+LIVE="$ROOT/apps/hypr/.config/hypr"
+BACKUP_ROOT="$ROOT/apps/hypr-bak"
+
+if [[ ! -d "$LIVE" ]]; then
+  printf 'Live Hyprland config not found: %s\n' "$LIVE" >&2
+  exit 1
+fi
+if [[ ! -d "$BACKUP_ROOT" ]]; then
+  printf 'Deployment backup directory not found: %s\n' "$BACKUP_ROOT" >&2
+  exit 1
+fi
+
+latest_backup_line="$(find "$BACKUP_ROOT" -mindepth 1 -maxdepth 1 -type d -name 'deploy-*' -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -n 1)"
+if [[ -z "$latest_backup_line" ]]; then
+  printf 'No deployment backup found under %s\n' "$BACKUP_ROOT" >&2
+  exit 1
+fi
+backup="${latest_backup_line#* }"
+backup_config="$backup/.config/hypr"
+if [[ ! -d "$backup_config" ]]; then
+  printf 'Deployment backup is missing its Hyprland config: %s\n' "$backup_config" >&2
+  exit 1
+fi
+
+printf '\nProposed rollback changes (dry run) from %s:\n' "$backup_config"
+rsync -ain --delete "$backup_config/" "$LIVE/"
+printf '\nThis will replace the live config with the latest deployment backup and reload Hyprland.\n'
+printf 'Type ROLLBACK to continue: ' >/dev/tty
+IFS= read -r confirmation </dev/tty || {
+  echo 'Could not read confirmation; rollback cancelled.' >&2
+  exit 1
+}
+if [[ "$confirmation" != 'ROLLBACK' ]]; then
+  echo 'Rollback cancelled.'
+  exit 0
+fi
+
+rsync -a --delete "$backup_config/" "$LIVE/"
+if hyprctl reload; then
+  printf 'Restored and reloaded backup: %s\n' "$backup_config"
+else
+  echo 'Restore completed, but Hyprland reload failed.' >&2
+  exit 1
+fi

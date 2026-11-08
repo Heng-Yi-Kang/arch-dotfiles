@@ -71,3 +71,4 @@ When modifying an application:
 
 - Never edit `apps/hypr/`; it is the live configuration, and changes there can break the running desktop.
 - Make and test Hyprland configuration changes in `apps/hypr-dev/` instead.
+- Before enabling commented Hyprland module loads or deploying the dev config, follow [`apps/hypr-dev/DEPLOY.md`](apps/hypr-dev/DEPLOY.md); ask the user for explicit confirmation before changing module loads or deploying.

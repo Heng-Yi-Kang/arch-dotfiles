@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+DEV="$ROOT/apps/hypr-dev/.config/hypr"
+LIVE="$ROOT/apps/hypr/.config/hypr"
+BACKUP_ROOT="$ROOT/apps/hypr-bak"
+
+"$SCRIPT_DIR/hypr-validate"
+
+if [[ ! -d "$LIVE" ]]; then
+  printf 'Live Hyprland config not found: %s\n' "$LIVE" >&2
+  exit 1
+fi
+
+printf '\nProposed dev-to-live changes (dry run):\n'
+rsync -ain --delete "$DEV/" "$LIVE/"
+printf '\nThis will back up the live config, replace it with the dev config, and reload Hyprland.\n'
+printf 'Type DEPLOY to continue: ' >/dev/tty
+IFS= read -r confirmation </dev/tty || {
+  echo 'Could not read confirmation; deployment cancelled.' >&2
+  exit 1
+}
+if [[ "$confirmation" != 'DEPLOY' ]]; then
+  echo 'Deployment cancelled.'
+  exit 0
+fi
+
+mkdir -p "$BACKUP_ROOT"
+backup="$(mktemp -d "$BACKUP_ROOT/deploy-$(date +%Y%m%d-%H%M%S)-XXXXXX")"
+mkdir -p "$backup/.config/hypr"
+rsync -a --delete "$LIVE/" "$backup/.config/hypr/"
+printf 'Saved live config to %s\n' "$backup/.config/hypr"
+
+rsync -a --delete "$DEV/" "$LIVE/"
+if hyprctl reload; then
+  echo 'Hyprland config deployed and reload requested.'
+else
+  echo 'Hyprland reload failed. Restore the saved config with scripts/hypr-rollback.' >&2
+  exit 1
+fi

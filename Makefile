@@ -1,4 +1,5 @@
 PACKAGES = hypr waybar swaync kitty bash
+THEME ?= tokyo-night
 
 HYPR_DEV = apps/hypr-dev/.config/hypr
 HYPR_LIVE = apps/hypr/.config/hypr
@@ -21,7 +22,7 @@ preview:
 	stow -n -v -d apps -t ~ $(PACKAGES)
 
 theme:
-	./scripts/theme-switch
+	./scripts/theme-switch "$(THEME)"
 
 reload:
 	./scripts/theme-reload

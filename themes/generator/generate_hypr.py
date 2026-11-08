@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generate Hyprland Lua color tokens from the shared semantic palette."""
+"""Generate Hyprland Lua color tokens from the selected semantic palette."""
 
 from __future__ import annotations
 
+import os
 import re
 import sys
 import tomllib
@@ -10,7 +11,12 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-PALETTE_PATH = REPO_ROOT / "themes" / "palettes" / "tokyo-night.toml"
+PALETTE_PATH = (
+    REPO_ROOT
+    / "themes"
+    / "palettes"
+    / f"{os.environ.get('DOTFILES_THEME', 'tokyo-night')}.toml"
+)
 TEMPLATE_DIR = REPO_ROOT / "themes" / "templates"
 TEMPLATE_NAME = "hypr-colors.lua.j2"
 OUTPUT_PATH = REPO_ROOT / "generated" / "hypr" / "colors.lua"

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+PALETTE_DIR="$ROOT/themes/palettes"
+GENERATOR_DIR="$ROOT/themes/generator"
+
+usage() {
+  printf 'Usage: %s <theme>\nAvailable themes:\n' "${0##*/}" >&2
+  for palette in "$PALETTE_DIR"/*.toml; do
+    [[ -e "$palette" ]] || continue
+    name="${palette##*/}"
+    printf '  %s\n' "${name%.toml}"
+  done >&2
+}
+
+if [[ $# -ne 1 || "$1" == "-h" || "$1" == "--help" ]]; then
+  usage
+  exit $(( $# == 1 ? 0 : 2 ))
+fi
+
+theme="$1"
+if [[ ! "$theme" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ || ! -f "$PALETTE_DIR/$theme.toml" ]]; then
+  printf 'Unknown theme: %s\n' "$theme" >&2
+  usage
+  exit 2
+fi
+
+if [[ -x "$ROOT/.venv/bin/python" ]]; then
+  PYTHON="$ROOT/.venv/bin/python"
+else
+  PYTHON="python3"
+fi
+
+for generator in \
+  generate_hypr.py \
+  generate_waybar.py \
+  generate_swaync.py \
+  generate_kitty.py \
+  generate_starship.py
+do
+  DOTFILES_THEME="$theme" "$PYTHON" "$GENERATOR_DIR/$generator"
+done

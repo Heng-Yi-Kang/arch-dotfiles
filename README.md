@@ -1,6 +1,6 @@
 # Dotfiles
 
-Personal Linux desktop configuration for Hyprland and related applications, with a shared Tokyo Night color palette and generated application styling.
+Personal Linux desktop configuration for Hyprland and related applications, with shared color palettes and generated application styling.
 
 ## Repository map
 
@@ -10,7 +10,7 @@ Personal Linux desktop configuration for Hyprland and related applications, with
 | `apps/hypr-dev/` | Development Hyprland configuration. Test changes here rather than in the live config. |
 | `apps/hypr/` | Live Hyprland configuration; treat as deployment output, not a development area. |
 | `apps/hypr-bak/` | Existing and deployment-created Hyprland backups. |
-| `themes/palettes/` | Shared source palettes; currently `tokyo-night.toml`. |
+| `themes/palettes/` | Shared source palettes, including Tokyo Night and Everforest variants. |
 | `themes/templates/` | Canonical Jinja2 templates for generated application styling. |
 | `themes/generator/` | Python scripts that render the palette and templates into application files. Starship's source config is `apps/starship/config.toml`. |
 | `generated/` | Rendered files consumed by app configs. This directory is Git-ignored; do not edit its contents by hand. |
@@ -23,20 +23,15 @@ For contributor rules and the full color conventions, see [`AGENTS.md`](AGENTS.m
 
 The palette is the source of truth for shared semantic colors. When changing application appearance, update the palette and/or canonical template, then regenerate the outputs. Keep application behavior in `apps/` separate from shared styling, and do not hardcode a second set of shared colors in app configs.
 
-The generators require Python 3.11+ and Jinja2. Use the repository virtual environment when available:
+The generators require Python 3.11+ and Jinja2. Use the repository virtual environment when available. To generate all stylesheets for a palette, pass its filename stem (without `.toml`) to the theme switcher:
 
 ```sh
 .venv/bin/python -m pip install Jinja2  # if Jinja2 is not already installed
-for generator in themes/generator/generate_*.py; do
-  .venv/bin/python "$generator"
-done
+./scripts/theme-switch everforest-dark
+# Or use the Make target: make theme THEME=everforest-dark
 ```
 
-To render only one application's output, run its corresponding script, for example:
-
-```sh
-.venv/bin/python themes/generator/generate_waybar.py
-```
+Available themes are listed by `./scripts/theme-switch --help`. Running an individual generator directly still defaults to `tokyo-night`.
 
 Generated styles are ignored by Git, so regenerate them after cloning or changing their source before using configurations that import them. Some app configurations currently refer to this checkout using the absolute path `/home/arch_Kang/dotfiles`; adjust those references if the repository lives elsewhere.
 

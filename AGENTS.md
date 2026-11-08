@@ -66,3 +66,8 @@ When modifying an application:
 - Regenerate them through the theme scripts before installing or using app-facing imports.
 - Keep generated files out of Git unless explicitly needed
   for reproducible testing.
+
+## Hyprland configuration
+
+- Never edit `apps/hypr/`; it is the live configuration, and changes there can break the running desktop.
+- Make and test Hyprland configuration changes in `apps/hypr-dev/` instead.

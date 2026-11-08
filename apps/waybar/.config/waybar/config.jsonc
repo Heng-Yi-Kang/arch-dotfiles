@@ -1,93 +1,138 @@
 {
-    "layer": "top",
-    "position": "top",
-    "mod": "dock",
-    "exclusive": true,
-    "passthrough": false,
-    "gtk-layer-shell": true,
-    "height": 40,
-    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
-    "modules-center": ["clock"],
-    "modules-right": ["cpu", "memory", "group/network-tray", "pulseaudio", "battery"],
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 40,
+  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+  "modules-center": ["clock"],
+  "modules-right": ["group/right-status"],
 
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "on-click": "activate",
-        "format": "{icon}",
-        "format-icons": {
-            "default": "●"
-        }
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    // "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "default": "●",
     },
+  },
 
-    "hyprland/submap": {
-        "format": "<span style=\"italic\">{}</span>"
+  "hyprland/submap": {
+    "format": "<span style=\"italic\">{}</span>",
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10,
+  },
+
+  "group/right-status": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "custom/sep-cpu-memory",
+      "memory",
+      "custom/sep-memory-audio",
+      "pulseaudio",
+      "custom/sep-audio-battery",
+      "battery",
+      "custom/sep-battery-network",
+      "group/network-tray",
+    ],
+  },
+
+  "group/network-tray": {
+    "orientation": "horizontal",
+    "modules": ["network", "custom/sep-network-tray", "tray"],
+  },
+
+  "custom/sep-network-tray": {
+    "exec": "printf '|'",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/sep-cpu-memory": {
+    "exec": "printf '|'",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/sep-memory-audio": {
+    "exec": "printf '|'",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/sep-audio-battery": {
+    "exec": "printf '|'",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/sep-battery-network": {
+    "exec": "printf '|'",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "clock": {
+    "format": "󰸗  {:%a %b %d  |  󱑒  %I:%M %p}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+  },
+
+  "cpu": {
+    "format": "  {usage}%",
+    "interval": 2,
+  },
+
+  "memory": {
+    "format": "  {used:0.1f}GB",
+    "interval": 5,
+  },
+
+  "backlight": {
+    "format": "{icon}  {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "󰂯 {icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋋",
+      "headset": "󰋋",
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
+    "on-click": "pavucontrol",
+  },
 
-    "tray": {
-        "icon-size": 16,
-        "spacing": 10
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀  {ipaddr}",
+    "format-disconnected": "󰖪  Disconnected",
+    "on-click": "~/.config/waybar/scripts/network-info.py",
+    "format-icons": {
+      "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     },
+    "tooltip-format-wifi": "{essid} {signalStrength}%\n󰈀  {ifname} via {gwaddr}\n  {bandwidthDownBits}    {bandwidthUpBits}",
+    "tooltip-format-ethernet": "󰈀  {ifname} via {gwaddr}\n  {bandwidthDownBits}    {bandwidthUpBits}",
+    "interval": 2,
+  },
 
-    "group/network-tray": {
-        "orientation": "horizontal",
-        "modules": ["network", "tray"]
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15,
     },
-
-    "clock": {
-        "format": "󰸗  {:%a %b %d  |  󱑒  %I:%M %p}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-    },
-
-    "cpu": {
-        "format": "  {usage}%",
-        "interval": 2
-    },
-
-    "memory": {
-        "format": "  {used:0.1f}GB",
-        "interval": 5
-    },
-
-    "backlight": {
-        "format": "{icon}  {percent}%",
-        "format-icons": ["󰃞", "󰃟", "󰃠"]
-    },
-
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "󰂯 {icon} {volume}%",
-        "format-muted": "󰝟 Muted",
-        "format-icons": {
-            "headphone": "󰋋",
-            "hands-free": "󰋋",
-            "headset": "󰋋",
-            "default": ["󰕿", "󰖀", "󰕾"]
-        },
-        "on-click": "pavucontrol"
-    },
-
-    "network": {
-        "format-wifi": "{icon}",
-        "format-ethernet": "󰈀  {ipaddr}",
-        "format-disconnected": "󰖪  Disconnected",
-        "on-click": "~/.config/waybar/scripts/network-info.py",
-        "format-icons": {
-            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
-        },
-        "tooltip-format-wifi": "{essid} {signalStrength}%\n󰈀  {ifname} via {gwaddr}\n  {bandwidthDownBits}    {bandwidthUpBits}",
-        "tooltip-format-ethernet": "󰈀  {ifname} via {gwaddr}\n  {bandwidthDownBits}    {bandwidthUpBits}",
-        "interval": 2
-    },
-
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon}  {capacity}%",
-        "format-charging": "󱐋 {icon}  {capacity}%",
-        "format-plugged": "  {capacity}%",
-        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    }
+    "format": "{icon}  {capacity}%",
+    "format-charging": "󱐋 {icon}  {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+  },
 }

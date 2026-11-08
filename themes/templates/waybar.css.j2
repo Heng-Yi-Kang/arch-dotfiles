@@ -24,16 +24,33 @@ window#waybar {
 #clock,
 #cpu,
 #memory,
-#network,
 #battery,
 #backlight,
 #pulseaudio,
-#tray {
+#group-network-tray {
     background-color: {{ colors.surface | rgba(0.60) }};
     padding: 0px 16px;
     margin: 6px 4px;
     border-radius: 10px;
     border: 1px solid {{ colors.border | rgba(0.55) }};
+}
+
+/* Keep network and tray together inside one shared pill. */
+#group-network-tray {
+    padding: 0px 12px;
+}
+
+#group-network-tray #network,
+#group-network-tray #tray {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+}
+
+#group-network-tray #network {
+    margin-right: 12px;
 }
 
 /* Left side: Premium Minimal Workspaces */
@@ -86,11 +103,6 @@ window#waybar {
 
 #pulseaudio.muted {
     color: {{ colors.muted }};
-}
-
-/* Tray / Menu Background */
-#tray {
-    background-color: {{ colors.surface_alt | rgba(0.85) }};
 }
 
 /* Network connection state */

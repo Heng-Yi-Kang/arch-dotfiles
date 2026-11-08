@@ -67,6 +67,11 @@ When modifying an application:
 - Keep generated files out of Git unless explicitly needed
   for reproducible testing.
 
+## Python environment
+
+- Use the repository virtual environment for Python scripts and theme generators: `.venv/bin/python <script>`.
+- Do not rely on `make venv` to activate the environment for subsequent commands; shell activation only affects its own process, and the current target is not compatible with Make's default `/bin/sh`.
+
 ## Hyprland configuration
 
 - Never edit `apps/hypr/`; it is the live configuration, and changes there can break the running desktop.

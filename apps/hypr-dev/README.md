@@ -45,9 +45,9 @@ Hyprland's dev config consumes the shared semantic palette through a generated
 Lua module. Before testing or stowing this config, run `make hypr-colors` (or
 `python3 themes/generator/generate_hypr.py`). This renders
 `generated/hypr/colors.lua` from `themes/palettes/tokyo-night.toml` using
-`themes/templates/hypr-colors.lua.j2`. `.config/hypr/modules/colors.lua` is an
-app-facing symlink to that ignored generated output; do not edit the output
-file directly.
+`themes/templates/hypr-colors.lua.j2`. `.config/hypr/modules/colors.lua`
+requires that generated module by its absolute path so it works when deployed
+through the `~/.config` symlink; do not edit the generated output file directly.
 
 `modules/appearance.lua` maps those tokens to Hyprland's color syntax and sets
 per-use opacity. Keep these compositor-specific choices there; change the

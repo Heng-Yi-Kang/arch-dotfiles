@@ -57,4 +57,4 @@ waybar-reload:
 	pkill -SIGUSR2 waybar
 
 swaync-reload:
-	swaync-client -R
+	swaync-client -R -rs

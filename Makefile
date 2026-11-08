@@ -3,7 +3,7 @@ PACKAGES = hypr waybar swaync kitty bash
 HYPR_DEV = apps/hypr-dev/.config/hypr
 HYPR_LIVE = apps/hypr/.config/hypr
 
-.PHONY: install uninstall restow preview theme reload validate hypr-colors hypr-validate hypr-preview hypr-deploy hypr-rollback waybar-reload venv
+.PHONY: install uninstall restow preview theme reload validate hypr-colors hypr-validate hypr-preview hypr-deploy hypr-rollback waybar-reload swaync-reload
 
 install:
 	stow -d apps -t ~ $(PACKAGES)
@@ -55,3 +55,5 @@ hypr-rollback:
 waybar-reload:
 	pkill -SIGUSR2 waybar
 
+swaync-reload:
+	swaync-client -R
